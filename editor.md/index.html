@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8"/>
+    <title>Editor.md</title>
+    <link rel="stylesheet" href="css/editormd.css"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+<div id="editormd"></div>
+<script src="examples/js/jquery.min.js"></script>
+<script src="editormd.js"></script>
+<script type="text/javascript">
+    let md = '';
+    var editor = editormd("editormd", {
+        width: "100vw",
+        height: "100vh",
+        path: 'lib/',
+        previewTheme: "default",
+        editorTheme: "pastel-on-dark",
+        markdown: md,
+        codeFold: true,
+        saveHTMLToTextarea: true,
+        searchReplace: true,
+        htmlDecode: "style,script,iframe|on*",
+        emoji: true,
+        taskList: true,
+        tocm: true,
+        tex: true,
+        flowChart: true,
+        sequenceDiagram: true,
+        imageUpload: true,
+        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageUploadURL: "./php/upload.php",
+        onload: function () {
+            window.parent.postMessage({
+                method: "onLoad",
+                content: "success"
+            }, "*");
+        },
+        onchange: function () {
+            window.parent.postMessage({
+                method: "onChange",
+                content: this.getValue()
+            }, "*");
+        }
+    });
+    window.addEventListener('message', function (event) {
+        let data = event.data;
+        let res;
+        switch (data.method) {
+            case 'getMarkdown':
+                res = editor.getMarkdown()
+                break;
+            case 'getHTML':
+                res = editor.getHTML()
+                break;
+            case 'setContent':
+                res = editor.setMarkdown(data.content);
+                break;
+        }
+        window.parent.postMessage({
+            method: data.method,
+            content: res
+        }, "*");
+    }, false)
+</script>
+</body>
+</html>
