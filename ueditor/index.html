@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>UEditor富文本编辑器</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" charset="utf-8" src="ueditor.config.js"></script>
+  <script type="text/javascript" charset="utf-8" src="ueditor.all.min.js"> </script>
+  <script type="text/javascript" charset="utf-8" src="lang/zh-cn/zh-cn.js"></script>
+
+  <style type="text/css">
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #editor {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+<script id="editor" type="text/plain"></script>
+<script type="text/javascript">
+  var ue = UE.getEditor('editor');
+</script>
+</body>
+
+</body>
+</html>
